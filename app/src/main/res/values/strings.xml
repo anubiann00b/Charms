@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Charms</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="close_process">Tap to close Charms</string>
+</resources>
