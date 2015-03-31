@@ -4,7 +4,6 @@ import android.app.Application;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Build;
@@ -22,11 +21,13 @@ public class ApplicationWrapper extends Application {
     private static ApplicationWrapper instance;
     public static ApplicationWrapper getInstance() { return instance; }
 
-    enum State { OPEN, CLOSED, OPENING, CLOSING }
+    public enum State { OPEN, CLOSED, OPENING, CLOSING }
 
-    static State currentState = State.CLOSED;
+    public static State currentState = State.CLOSED;
 
-    public static final int WINDOW_ID = 0;
+    public static CharmsWindow charmsWindow = null;
+
+    public static final int CHARMS_ID = 0;
     public static final int LAUNCHER_ID = 1;
     public static GestureDetectorCompat gestureDetector = new GestureDetectorCompat(ApplicationWrapper.getInstance(), new GestureDetector.OnGestureListener() {
         @Override
@@ -52,8 +53,8 @@ public class ApplicationWrapper extends Application {
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            openCharmsWindow();
             currentState = State.OPENING;
+            ApplicationWrapper.getInstance().openCharmsWindow();
             return true;
         }
     });
@@ -77,6 +78,8 @@ public class ApplicationWrapper extends Application {
         instance = this;
     }
 
+    private Notification persistentNotification = null;
+
     public String getAppName() {
         return "Charms";
     }
@@ -85,32 +88,28 @@ public class ApplicationWrapper extends Application {
         return R.mipmap.ic_launcher;
     }
 
-    public String getPersistentNotificationTitle() {
-        return getAppName();
-    }
-
-    public String getPersistentNotificationMessage() {
-        return this.getString(R.string.close_process);
-    }
-
-    public Intent getPersistentNotificationIntent() {
-        return StandOutWindow.getCloseAllIntent(this, LauncherWindow.class);
-    }
-
     public Notification getPersistentNotification() {
-        Notification.Builder n = new Notification.Builder(this);
-        n.setSmallIcon(getAppIcon());
-        n.setContentTitle(getPersistentNotificationTitle());
-        n.setContentText(getPersistentNotificationMessage());
-        n.setContentIntent(PendingIntent.getService(this, 0, getPersistentNotificationIntent(), PendingIntent.FLAG_UPDATE_CURRENT));
-        return n.getNotification();
+        if (persistentNotification == null) {
+            Notification.Builder n = new Notification.Builder(this);
+            n.setSmallIcon(this.getAppIcon());
+            n.setContentTitle(this.getAppName());
+            n.setContentIntent(PendingIntent.getService(this, 0, StandOutWindow.getCloseAllIntent(this, LauncherWindow.class), PendingIntent.FLAG_UPDATE_CURRENT));
+            persistentNotification = n.getNotification();
+        }
+        return persistentNotification;
     }
 
     public SharedPreferences getSharedPrefs() {
         return PreferenceManager.getDefaultSharedPreferences(this);
     }
 
-    public static void openCharmsWindow() {
+    public void openCharmsWindow() {
+        charmsWindow.show(CHARMS_ID);
+        currentState = State.OPEN;
+    }
 
+    public void closeCharmsWindow() {
+        charmsWindow.hide(CHARMS_ID);
+        currentState = State.CLOSED;
     }
 }

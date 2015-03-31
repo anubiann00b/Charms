@@ -1,13 +1,5 @@
 package wei.mark.standout.ui;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
-import wei.mark.standout.R;
-import wei.mark.standout.StandOutWindow;
-import wei.mark.standout.StandOutWindow.StandOutLayoutParams;
-import wei.mark.standout.Utils;
-import wei.mark.standout.constants.StandOutFlags;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -22,6 +14,15 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+import wei.mark.standout.R;
+import wei.mark.standout.StandOutWindow;
+import wei.mark.standout.StandOutWindow.StandOutLayoutParams;
+import wei.mark.standout.Utils;
+import wei.mark.standout.constants.StandOutFlags;
 
 /**
  * Special view that represents a floating window.
@@ -244,7 +245,7 @@ public class Window extends FrameLayout {
 			mContext.onResize(id, this, this, event);
 		}
 
-		return true;
+		return super.onTouchEvent(event);
 	}
 
 	@Override

@@ -26,11 +26,13 @@ public class CharmsWindow extends StandOutWindow {
     public void createAndAttachView(int id, final FrameLayout frame) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.charms_window, frame, true);
+        ApplicationWrapper.charmsWindow = this;
     }
 
     @Override
     public boolean onTouchBody(int id, Window window, View view, MotionEvent event) {
-        return ApplicationWrapper.gestureDetector.onTouchEvent(event);
+        ApplicationWrapper.getInstance().closeCharmsWindow();
+        return false;
     }
 
     @Override
@@ -45,6 +47,6 @@ public class CharmsWindow extends StandOutWindow {
 
     @Override
     public Notification getPersistentNotification(int id) {
-        return ApplicationWrapper.getInstance().getPersistentNotification();
+        return null;
     }
 }

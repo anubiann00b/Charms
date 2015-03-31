@@ -1,12 +1,5 @@
 package wei.mark.standout;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-
-import wei.mark.standout.constants.StandOutFlags;
-import wei.mark.standout.ui.Window;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -36,6 +29,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+import wei.mark.standout.constants.StandOutFlags;
+import wei.mark.standout.ui.Window;
 
 /**
  * Extend this class to easily create and manage floating StandOut windows.
@@ -1137,11 +1138,7 @@ public abstract class StandOutWindow extends Service {
 		} else {
 			// notification can only be null if it was provided before
 			if (!startedForeground) {
-				throw new RuntimeException("Your StandOutWindow service must"
-						+ "provide a persistent notification."
-						+ "The notification prevents Android"
-						+ "from killing your service in low"
-						+ "memory situations.");
+				Log.e("NOTIF", "Your StandOutWindow service must provide a persistent notification.");
 			}
 		}
 
@@ -1162,8 +1159,9 @@ public abstract class StandOutWindow extends Service {
 		final Window window = getWindow(id);
 
 		if (window == null) {
-			throw new IllegalArgumentException("Tried to hide(" + id
+			Log.e("STANDOUT", "Tried to hide(" + id
 					+ ") a null window.");
+            return;
 		}
 
 		// alert callbacks and cancel if instructed

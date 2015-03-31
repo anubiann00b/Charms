@@ -14,10 +14,11 @@ public class LauncherActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
-        StandOutWindow.closeAll(this, CharmsWindow.class);
         StandOutWindow.closeAll(this, LauncherWindow.class);
-        StandOutWindow.show(this, CharmsWindow.class, ApplicationWrapper.WINDOW_ID);
+        StandOutWindow.closeAll(this, CharmsWindow.class);
         StandOutWindow.show(this, LauncherWindow.class, ApplicationWrapper.LAUNCHER_ID);
+        StandOutWindow.show(this, CharmsWindow.class, ApplicationWrapper.CHARMS_ID);
+        StandOutWindow.hide(this, CharmsWindow.class, ApplicationWrapper.CHARMS_ID);
     }
 
 
