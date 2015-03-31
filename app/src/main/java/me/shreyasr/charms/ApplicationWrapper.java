@@ -54,7 +54,7 @@ public class ApplicationWrapper extends Application {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             currentState = State.OPENING;
-            ApplicationWrapper.getInstance().openCharmsWindow();
+            ApplicationWrapper.charmsWindow.openCharmsWindow();
             return true;
         }
     });
@@ -101,15 +101,5 @@ public class ApplicationWrapper extends Application {
 
     public SharedPreferences getSharedPrefs() {
         return PreferenceManager.getDefaultSharedPreferences(this);
-    }
-
-    public void openCharmsWindow() {
-        charmsWindow.show(CHARMS_ID);
-        currentState = State.OPEN;
-    }
-
-    public void closeCharmsWindow() {
-        charmsWindow.hide(CHARMS_ID);
-        currentState = State.CLOSED;
     }
 }
