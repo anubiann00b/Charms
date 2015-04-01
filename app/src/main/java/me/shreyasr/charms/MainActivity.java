@@ -8,12 +8,12 @@ import android.view.MenuItem;
 import wei.mark.standout.StandOutWindow;
 
 
-public class LauncherActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_launcher);
+        setContentView(R.layout.activity_main);
         StandOutWindow.closeAll(this, LauncherWindow.class);
         StandOutWindow.closeAll(this, CharmsWindow.class);
         StandOutWindow.show(this, LauncherWindow.class, ApplicationWrapper.LAUNCHER_ID);

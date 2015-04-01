@@ -30,8 +30,8 @@ public class CharmsWindow extends StandOutWindow {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         FrameLayout root = (FrameLayout) inflater.inflate(R.layout.charms_window, frame, true);
 
-        ViewGroup charmHolder = (ViewGroup) inflater.inflate(R.layout.charm_holder, root, false);
-        View charm = inflater.inflate(R.layout.test_charm, charmHolder, false);
+        ViewGroup charmHolder = (ViewGroup) inflater.inflate(R.layout.charms_holder, root, false);
+        View charm = inflater.inflate(R.layout.charm_test, charmHolder, false);
         charmHolder.addView(charm);
         root.addView(charmHolder);
     }

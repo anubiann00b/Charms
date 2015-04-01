@@ -25,7 +25,7 @@ public class LauncherWindow extends StandOutWindow {
     @Override
     public void createAndAttachView(int id, final FrameLayout frame) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.launcher_frame, frame, true);
+        inflater.inflate(R.layout.launcher, frame, true);
     }
 
     @Override
