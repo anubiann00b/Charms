@@ -28,25 +28,16 @@ public class CharmsWindow extends StandOutWindow {
         ApplicationWrapper.charmsWindow = this;
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        FrameLayout root = (FrameLayout) inflater.inflate(R.layout.charms_window, frame, true);
+        FrameLayout root = (FrameLayout) inflater.inflate(R.layout.charms_window, frame, false);
+        frame.addView(root);
 
-        CharmHolder charmHolder = (CharmHolder) inflater.inflate(R.layout.charms_holder, root, false);
-        View charm = inflater.inflate(R.layout.charm_test, charmHolder, false);
-        charmHolder.addView(charm);
-        root.addView(charmHolder);
-
-        charm.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.d("Charm Event", event.toString());
-                return true;
-            }
-        });
+        if (root.getChildCount() == 0)
+            CharmHolder.addCharm(root, new TestCharm(), inflater);
     }
 
     @Override
     public boolean onTouchBody(int id, Window window, View view, MotionEvent event) {
-        Log.d("Body Event", event.toString());
+        Log.i("Event", "Body: " + Utils.eventToString(event));
         return true;
     }
 
