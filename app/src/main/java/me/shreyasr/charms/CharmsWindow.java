@@ -1,10 +1,10 @@
 package me.shreyasr.charms;
 
 import android.app.Notification;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import wei.mark.standout.StandOutWindow;
@@ -30,16 +30,24 @@ public class CharmsWindow extends StandOutWindow {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         FrameLayout root = (FrameLayout) inflater.inflate(R.layout.charms_window, frame, true);
 
-        ViewGroup charmHolder = (ViewGroup) inflater.inflate(R.layout.charms_holder, root, false);
+        CharmHolder charmHolder = (CharmHolder) inflater.inflate(R.layout.charms_holder, root, false);
         View charm = inflater.inflate(R.layout.charm_test, charmHolder, false);
         charmHolder.addView(charm);
         root.addView(charmHolder);
+
+        charm.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.d("Charm Event", event.toString());
+                return true;
+            }
+        });
     }
 
     @Override
     public boolean onTouchBody(int id, Window window, View view, MotionEvent event) {
-        this.closeCharmsWindow();
-        return false;
+        Log.d("Body Event", event.toString());
+        return true;
     }
 
     @Override
