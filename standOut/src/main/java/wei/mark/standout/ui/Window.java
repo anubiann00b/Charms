@@ -135,10 +135,11 @@ public class Window extends FrameLayout {
 				boolean consumed = false;
 
 				// handle move and bring to front
-				consumed = context.onTouchHandleMove(id, Window.this, v, event)
-						|| consumed;
+				// consumed = context.onTouchHandleMove(id, Window.this, v, event)
+				//		|| consumed;
 
 				// alert implementation
+                Log.d("ayla", "mao");
 				consumed = context.onTouchBody(id, Window.this, v, event)
 						|| consumed;
 
@@ -199,18 +200,19 @@ public class Window extends FrameLayout {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
+        mContext.onTouchBody(id, this, this, event);
 		// handle touching outside
-		switch (event.getAction()) {
-			case MotionEvent.ACTION_OUTSIDE:
-				// unfocus window
-				if (mContext.getFocusedWindow() == this) {
-					mContext.unfocus(this);
-				}
-
-				// notify implementation that ACTION_OUTSIDE occurred
-				mContext.onTouchBody(id, this, this, event);
-				break;
-		}
+//		switch (event.getAction()) {
+//			case MotionEvent.ACTION_OUTSIDE:
+//				// unfocus window
+//				if (mContext.getFocusedWindow() == this) {
+//					mContext.unfocus(this);
+//				}
+//
+//				// notify implementation that ACTION_OUTSIDE occurred
+//				//mContext.onTouchBody(id, this, this, event);
+//				break;
+//		}
 
 		// handle multitouch
 		if (event.getPointerCount() >= 2
@@ -245,7 +247,7 @@ public class Window extends FrameLayout {
 			mContext.onResize(id, this, this, event);
 		}
 
-		return super.onTouchEvent(event);
+		return false;//super.onTouchEvent(event);
 	}
 
 	@Override
