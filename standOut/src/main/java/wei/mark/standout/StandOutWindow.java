@@ -1138,7 +1138,7 @@ public abstract class StandOutWindow extends Service {
 		} else {
 			// notification can only be null if it was provided before
 			if (!startedForeground) {
-				Log.e("NOTIF", "Your StandOutWindow service must provide a persistent notification.");
+				Log.i("STANDOUT", "Your StandOutWindow service must provide a persistent notification.");
 			}
 		}
 
@@ -1159,7 +1159,7 @@ public abstract class StandOutWindow extends Service {
 		final Window window = getWindow(id);
 
 		if (window == null) {
-			Log.e("STANDOUT", "Tried to hide(" + id
+			Log.i("STANDOUT", "Tried to hide(" + id
 					+ ") a null window.");
             return;
 		}
