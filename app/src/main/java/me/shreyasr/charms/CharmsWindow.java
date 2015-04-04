@@ -27,12 +27,21 @@ public class CharmsWindow extends StandOutWindow {
     public void createAndAttachView(int id, final FrameLayout frame) {
         ApplicationWrapper.charmsWindow = this;
 
-        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        FrameLayout root = (FrameLayout) inflater.inflate(R.layout.charms_window, frame, false);
+        final LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        final FrameLayout root = (FrameLayout) inflater.inflate(R.layout.charms_window, frame, false);
+        root.findViewById(R.id.window_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeCharmsWindow();
+            }
+        });
+        root.findViewById(R.id.window_open_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CharmHolder.addCharm(root, new TestCharm(), inflater);
+            }
+        });
         frame.addView(root);
-
-        if (root.getChildCount() == 0)
-            CharmHolder.addCharm(root, new TestCharm(), inflater);
     }
 
     @Override

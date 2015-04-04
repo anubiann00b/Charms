@@ -2,7 +2,25 @@
 <me.shreyasr.charms.CharmHolder xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/charm_border"
+    android:background="@drawable/charm_background"
     android:padding="10dp">
+
+    <LinearLayout
+        android:id="@+id/charm_titlebar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/close_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/ic_navigation_close"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/charm_frame"
+        android:layout_below="@id/charm_titlebar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </FrameLayout>
 
 </me.shreyasr.charms.CharmHolder>
