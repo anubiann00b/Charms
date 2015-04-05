@@ -52,20 +52,26 @@ public class CharmHolder extends RelativeLayout {
     int startWindowX = 0;
     int startWindowY = 0;
 
+    int dx;
+    int dy;
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) this.getLayoutParams();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                startX = event.getRawX();
-                startY = event.getRawY();
-                startWindowX = params.leftMargin;
-                startWindowY = params.topMargin;
+                dx = (int) event.getX();
+                dy = (int) event.getY();
                 this.bringToFront();
                 break;
             case MotionEvent.ACTION_MOVE:
-                params.leftMargin = (int) (event.getRawX() - startX) + startWindowX;
-                params.topMargin = (int) (event.getRawY() - startY) + startWindowY;
+                int x = (int) event.getX();
+                int y = (int) event.getY();
+                params.leftMargin += (x - dx);
+                params.rightMargin -= (x - dx);
+                params.topMargin += (y - dy);
+                params.bottomMargin -= (y - dy);
+
                 this.setLayoutParams(params);
                 this.bringToFront();
                 break;
