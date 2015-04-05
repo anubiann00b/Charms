@@ -2,6 +2,8 @@
 <me.shreyasr.charms.CharmHolder xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:fitsSystemWindows="false"
+    android:clipToPadding="false"
     android:background="@drawable/charm_background"
     android:padding="10dp">
 
@@ -20,6 +22,8 @@
         android:id="@+id/charm_frame"
         android:layout_below="@id/charm_titlebar"
         android:layout_width="wrap_content"
+        android:fitsSystemWindows="false"
+        android:clipToPadding="false"
         android:layout_height="wrap_content">
     </FrameLayout>
 

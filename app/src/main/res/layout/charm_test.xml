@@ -4,4 +4,6 @@
     android:layout_height="match_parent"
     android:text="Hello World!"
     android:textSize="48sp"
+    android:fitsSystemWindows="false"
+    android:clipToPadding="false"
     xmlns:android="http://schemas.android.com/apk/res/android"/>

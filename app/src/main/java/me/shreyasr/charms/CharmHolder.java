@@ -54,7 +54,6 @@ public class CharmHolder extends RelativeLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        //Log.i("Event", "Holder: " + Utils.eventToString(event));
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) this.getLayoutParams();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:

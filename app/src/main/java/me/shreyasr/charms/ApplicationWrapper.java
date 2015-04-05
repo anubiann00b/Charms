@@ -53,7 +53,6 @@ public class ApplicationWrapper extends Application {
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            currentState = State.OPENING;
             ApplicationWrapper.charmsWindow.openCharmsWindow();
             return true;
         }

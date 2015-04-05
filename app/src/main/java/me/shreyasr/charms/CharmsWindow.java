@@ -1,6 +1,7 @@
 package me.shreyasr.charms;
 
 import android.app.Notification;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -25,6 +26,9 @@ public class CharmsWindow extends StandOutWindow {
 
     @Override
     public void createAndAttachView(int id, final FrameLayout frame) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+            frame.setFitsSystemWindows(false);
+        frame.setClipToPadding(false);
         ApplicationWrapper.charmsWindow = this;
 
         final LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -66,12 +70,16 @@ public class CharmsWindow extends StandOutWindow {
     }
 
     public void openCharmsWindow() {
-        this.show(ApplicationWrapper.CHARMS_ID);
-        ApplicationWrapper.currentState = ApplicationWrapper.State.OPEN;
+        if (ApplicationWrapper.currentState == ApplicationWrapper.State.CLOSED) {
+            this.show(ApplicationWrapper.CHARMS_ID);
+            ApplicationWrapper.currentState = ApplicationWrapper.State.OPEN;
+        }
     }
 
     public void closeCharmsWindow() {
-        this.hide(ApplicationWrapper.CHARMS_ID);
-        ApplicationWrapper.currentState = ApplicationWrapper.State.CLOSED;
+        if (ApplicationWrapper.currentState == ApplicationWrapper.State.OPEN) {
+            this.hide(ApplicationWrapper.CHARMS_ID);
+            ApplicationWrapper.currentState = ApplicationWrapper.State.CLOSED;
+        }
     }
 }
