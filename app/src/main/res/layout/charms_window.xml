@@ -23,7 +23,7 @@
             android:id="@+id/window_open_test"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:gravity="right"
+            android:gravity="end"
             android:text="Test" />
     </LinearLayout>
 

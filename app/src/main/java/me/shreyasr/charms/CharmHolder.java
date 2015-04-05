@@ -47,9 +47,30 @@ public class CharmHolder extends RelativeLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
+    float startX = 0;
+    float startY = 0;
+    int startWindowX = 0;
+    int startWindowY = 0;
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.i("Event", "Holder: " + Utils.eventToString(event));
+        //Log.i("Event", "Holder: " + Utils.eventToString(event));
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) this.getLayoutParams();
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                startX = event.getRawX();
+                startY = event.getRawY();
+                startWindowX = params.leftMargin;
+                startWindowY = params.topMargin;
+                this.bringToFront();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                params.leftMargin = (int) (event.getRawX() - startX) + startWindowX;
+                params.topMargin = (int) (event.getRawY() - startY) + startWindowY;
+                this.setLayoutParams(params);
+                this.bringToFront();
+                break;
+        }
         return true;
     }
 }
