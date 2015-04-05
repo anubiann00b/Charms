@@ -22,8 +22,6 @@
         android:id="@+id/charm_frame"
         android:layout_below="@id/charm_titlebar"
         android:layout_width="wrap_content"
-        android:fitsSystemWindows="false"
-        android:clipToPadding="false"
         android:layout_height="wrap_content">
     </FrameLayout>
 

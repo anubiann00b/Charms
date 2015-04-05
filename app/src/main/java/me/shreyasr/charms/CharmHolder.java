@@ -21,7 +21,6 @@ public class CharmHolder extends RelativeLayout {
             public boolean onTouch(View v, MotionEvent event) {
                 Log.i("Event", "Close Button: " + Utils.eventToString(event));
                 root.removeView(charmHolder);
-                root.invalidate();
                 return true;
             }
         });
@@ -47,13 +46,7 @@ public class CharmHolder extends RelativeLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    float startX = 0;
-    float startY = 0;
-    int startWindowX = 0;
-    int startWindowY = 0;
-
-    int dx;
-    int dy;
+    int dx, dy;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -65,13 +58,10 @@ public class CharmHolder extends RelativeLayout {
                 this.bringToFront();
                 break;
             case MotionEvent.ACTION_MOVE:
-                int x = (int) event.getX();
-                int y = (int) event.getY();
-                params.leftMargin += (x - dx);
-                params.rightMargin -= (x - dx);
-                params.topMargin += (y - dy);
-                params.bottomMargin -= (y - dy);
-
+                params.leftMargin += (event.getX() - dx);
+                params.rightMargin -= (event.getX() - dx);
+                params.topMargin += (event.getY() - dy);
+                params.bottomMargin -= (event.getY() - dy);
                 this.setLayoutParams(params);
                 this.bringToFront();
                 break;
