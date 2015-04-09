@@ -8,13 +8,16 @@ import android.view.ViewGroup;
 
 public class TestCharm extends Charm {
 
+    public TestCharm(int leftMargin, int rightMargin) {
+        super(leftMargin, rightMargin);
+    }
+
     @Override
     public View getView(LayoutInflater inflater, ViewGroup parent) {
         View charm = inflater.inflate(R.layout.charm_test, parent, false);
         charm.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Log.i("Event", "Test Charm: " + Utils.eventToString(event));
                 return false;
             }
         });

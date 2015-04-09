@@ -1,7 +1,6 @@
 package me.shreyasr.charms;
 
 import android.app.Notification;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +24,7 @@ public class CharmsWindow extends StandOutWindow {
 
     @Override
     public void createAndAttachView(int id, final FrameLayout frame) {
+        CharmHolder.init();
         ApplicationWrapper.charmsWindow = this;
 
         final LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -38,7 +38,7 @@ public class CharmsWindow extends StandOutWindow {
         root.findViewById(R.id.window_open_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CharmHolder.addCharm(root, new TestCharm(), inflater);
+                CharmHolder.addCharm(root, new TestCharm(0,0), inflater);
             }
         });
         frame.addView(root);
@@ -46,7 +46,6 @@ public class CharmsWindow extends StandOutWindow {
 
     @Override
     public boolean onTouchBody(int id, Window window, View view, MotionEvent event) {
-        Log.i("Event", "Body: " + Utils.eventToString(event));
         return true;
     }
 
