@@ -2,9 +2,9 @@ package me.shreyasr.charms;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,15 +22,28 @@ public class CharmHolder extends RelativeLayout {
 
     static List<Charm> charms = new ArrayList<Charm>();
 
-    public static void init() {
-        SharedPreferences prefs = ApplicationWrapper.getInstance().getSharedPrefs();
+    public static void init(ViewGroup root, LayoutInflater inflater) {
+        charms.clear();
+        ComplexPreferences prefs = ComplexPreferences.getComplexPreferences(ApplicationWrapper.getInstance(), "prefs", Context.MODE_PRIVATE);
+        int count = prefs.getInt("count", 0);
+        for (int i=0;i<count;i++) {
+            Charm c = prefs.getObject("data" + i, Charm.class);
+            if (c != null)
+                addCharm(root, c, inflater, false);
+            else
+                Log.d("Charms", "Missing expected charm at " + i + ".");
+        }
     }
 
     public static void save() {
-        SharedPreferences prefs = ApplicationWrapper.getInstance().getSharedPrefs();
+        ComplexPreferences prefs = ComplexPreferences.getComplexPreferences(ApplicationWrapper.getInstance(), "prefs", Context.MODE_PRIVATE);
+        prefs.edit().putInt("count", charms.size()).apply();
+        for (int i=0;i<charms.size();i++)
+            prefs.putObject("data" + i, charms.get(i), Charm.class);
+        prefs.apply();
     }
 
-    public static void addCharm(final ViewGroup root, final Charm charm, LayoutInflater inflater) {
+    public static void addCharm(final ViewGroup root, final Charm charm, LayoutInflater inflater, boolean save) {
         charms.add(charm);
         final CharmHolder charmHolder = (CharmHolder) inflater.inflate(R.layout.charms_holder, root, false);
         charmHolder.setCharm(charm);
@@ -45,7 +58,8 @@ public class CharmHolder extends RelativeLayout {
         ((FrameLayout) charmHolder.findViewById(R.id.charm_frame)).addView(charm.getView(inflater, charmHolder));
         root.addView(charmHolder);
         charmHolder.animateIn();
-        save();
+        if (save)
+            save();
     }
 
     Charm charm;
@@ -82,7 +96,6 @@ public class CharmHolder extends RelativeLayout {
                 dy = (int) event.getY();
                 this.bringToFront();
                 this.invalidate();
-                save();
                 break;
             case MotionEvent.ACTION_MOVE:
                 params.leftMargin += (event.getX() - dx);
@@ -90,10 +103,12 @@ public class CharmHolder extends RelativeLayout {
                 params.topMargin += (event.getY() - dy);
                 params.bottomMargin -= (event.getY() - dy);
                 charm.leftMargin = params.leftMargin;
-                charm.rightMargin = params.rightMargin;
+                charm.topMargin = params.topMargin;
                 this.setLayoutParams(params);
                 this.bringToFront();
                 this.invalidate();
+                break;
+            case MotionEvent.ACTION_UP:
                 save();
                 break;
         }

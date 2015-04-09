@@ -1,15 +1,15 @@
 package me.shreyasr.charms;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 public class TestCharm extends Charm {
 
-    public TestCharm(int leftMargin, int rightMargin) {
-        super(leftMargin, rightMargin);
+    public TestCharm(int leftMargin, int topMargin) {
+        super(leftMargin, topMargin);
     }
 
     @Override
@@ -21,6 +21,9 @@ public class TestCharm extends Charm {
                 return false;
             }
         });
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) parent.getLayoutParams();
+        params.leftMargin = leftMargin;
+        params.topMargin = topMargin;
         return charm;
     }
 }
