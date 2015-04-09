@@ -24,7 +24,7 @@ public class CharmHolder extends RelativeLayout {
 
     public static void init(ViewGroup root, LayoutInflater inflater) {
         charms.clear();
-        ComplexPreferences prefs = ComplexPreferences.getComplexPreferences(ApplicationWrapper.getInstance(), "prefs", Context.MODE_PRIVATE);
+        ComplexPreferences prefs = ApplicationWrapper.getInstance().getSharedPrefs();
         int count = prefs.getInt("count", 0);
         for (int i=0;i<count;i++) {
             Charm c = prefs.getObject("data" + i, Charm.class);
@@ -36,11 +36,11 @@ public class CharmHolder extends RelativeLayout {
     }
 
     public static void save() {
-        ComplexPreferences prefs = ComplexPreferences.getComplexPreferences(ApplicationWrapper.getInstance(), "prefs", Context.MODE_PRIVATE);
-        prefs.edit().putInt("count", charms.size()).apply();
+        ComplexPreferences prefs = ApplicationWrapper.getInstance().getSharedPrefs();
+        ComplexPreferences.ComplexPreferenceEditor editor = prefs.edit().putInt("count", charms.size());
         for (int i=0;i<charms.size();i++)
-            prefs.putObject("data" + i, charms.get(i), Charm.class);
-        prefs.apply();
+            editor.putObject("data" + i, charms.get(i), Charm.class);
+        editor.apply();
     }
 
     public static void addCharm(final ViewGroup root, final Charm charm, LayoutInflater inflater, boolean save) {

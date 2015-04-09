@@ -4,10 +4,8 @@ import android.app.Application;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.support.v4.view.GestureDetectorCompat;
 import android.view.Display;
 import android.view.GestureDetector;
@@ -98,7 +96,7 @@ public class ApplicationWrapper extends Application {
         return persistentNotification;
     }
 
-    public SharedPreferences getSharedPrefs() {
-        return PreferenceManager.getDefaultSharedPreferences(this);
+    public ComplexPreferences getSharedPrefs() {
+        return ComplexPreferences.getComplexPreferences(this);
     }
 }
