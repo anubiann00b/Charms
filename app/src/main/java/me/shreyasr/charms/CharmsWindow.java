@@ -37,7 +37,7 @@ public class CharmsWindow extends StandOutWindow {
         root.findViewById(R.id.window_open_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CharmHolder.addCharm(root, new TestCharm(0,0), inflater, true);
+                CharmHolder.addCharm(root, new MediaCharm(0,0), inflater, true);
             }
         });
 

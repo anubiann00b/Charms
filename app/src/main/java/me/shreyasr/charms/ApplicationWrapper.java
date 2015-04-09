@@ -6,9 +6,13 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.graphics.Point;
 import android.os.Build;
+import android.os.IBinder;
+import android.os.SystemClock;
 import android.support.v4.view.GestureDetectorCompat;
+import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 
@@ -29,7 +33,7 @@ public class ApplicationWrapper extends Application {
     public static final int LAUNCHER_ID = 1;
     public static GestureDetectorCompat gestureDetector = new GestureDetectorCompat(ApplicationWrapper.getInstance(), new GestureDetector.OnGestureListener() {
         @Override
-        public boolean onDown(MotionEvent e) {
+        public boolean onDown(MotionEvent event) {
             return false;
         }
 
