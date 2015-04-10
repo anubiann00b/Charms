@@ -19,4 +19,5 @@ public abstract class Charm {
     }
 
     public abstract View getView(LayoutInflater inflater, ViewGroup parent);
+    public abstract Charm create();
 }

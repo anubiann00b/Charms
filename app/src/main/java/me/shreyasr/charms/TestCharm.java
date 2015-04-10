@@ -11,6 +11,10 @@ public class TestCharm extends Charm {
         super("Test Charm", R.mipmap.ic_launcher, leftMargin, topMargin);
     }
 
+    public Charm create() {
+        return new TestCharm(0,0);
+    }
+
     @Override
     public View getView(LayoutInflater inflater, ViewGroup parent) {
         View charm = inflater.inflate(R.layout.charm_test, parent, false);

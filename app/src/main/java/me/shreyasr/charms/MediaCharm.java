@@ -18,10 +18,12 @@ import java.lang.reflect.Method;
 
 public class MediaCharm extends Charm {
 
-    public MediaCharm(CharmsWindow window, int leftMargin, int topMargin) {
+    public MediaCharm(int leftMargin, int topMargin) {
         super("Media Charm", R.mipmap.ic_launcher, leftMargin, topMargin);
-        if (window != null)
-            window.registerReceiver(musicReciever, intentFilter);
+    }
+
+    public Charm create() {
+        return new MediaCharm(0,0);
     }
 
     @Override
@@ -52,7 +54,7 @@ public class MediaCharm extends Charm {
     }
 
     private void sendMediaKey(int keycode) {
-        long eventtime = SystemClock.uptimeMillis();
+        long time = SystemClock.uptimeMillis();
         try {
             // Get binder from ServiceManager.checkService(String)
             IBinder iBinder  = (IBinder) Class.forName("android.os.ServiceManager")
@@ -66,14 +68,30 @@ public class MediaCharm extends Charm {
 
             // Dispatch keyEvent using IAudioService.dispatchMediaKeyEvent(KeyEvent)
             Method dispatchedKeyEvent = Class.forName("android.media.IAudioService").getDeclaredMethod("dispatchMediaKeyEvent", KeyEvent.class);
-            dispatchedKeyEvent.invoke(audioService, new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_DOWN, keycode, 0));
-            dispatchedKeyEvent.invoke(audioService, new KeyEvent(eventtime, eventtime, KeyEvent.ACTION_UP, keycode, 0));
+            dispatchedKeyEvent.invoke(audioService, new KeyEvent(time, time, KeyEvent.ACTION_DOWN, keycode, 0));
+            dispatchedKeyEvent.invoke(audioService, new KeyEvent(time, time, KeyEvent.ACTION_UP, keycode, 0));
         }  catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     static IntentFilter intentFilter;
+
+    static BroadcastReceiver musicReciever = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // AudioManager.isMusicActive();
+            Log.d("Received", intent.getAction());
+            String action = intent.getAction();
+            String cmd = intent.getStringExtra("command");
+            Log.v("tag ", action + " / " + cmd);
+            String artist = intent.getStringExtra("artist");
+            String album = intent.getStringExtra("album");
+            String track = intent.getStringExtra("track");
+            Log.v("tag", artist + ":" + album + ":" + track);
+            Toast.makeText(ApplicationWrapper.getInstance(), track, Toast.LENGTH_SHORT).show();
+        }
+    };
 
     static {
         intentFilter = new IntentFilter();
@@ -92,20 +110,7 @@ public class MediaCharm extends Charm {
         intentFilter.addAction("com.spotify.music.metadatachanged");
     }
 
-    static BroadcastReceiver musicReciever = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // AudioManager.isMusicActive();
-            Log.d("Received", intent.getAction());
-            String action = intent.getAction();
-            String cmd = intent.getStringExtra("command");
-            Log.v("tag ", action + " / " + cmd);
-            String artist = intent.getStringExtra("artist");
-            String album = intent.getStringExtra("album");
-            String track = intent.getStringExtra("track");
-            Log.v("tag", artist + ":" + album + ":" + track);
-            Toast.makeText(ApplicationWrapper.getInstance(), track, Toast.LENGTH_SHORT).show();
-        }
-    };
+    public static void registerMediaReciever(CharmsWindow window) {
+        window.registerReceiver(musicReciever, intentFilter);
+    }
 }

@@ -25,6 +25,7 @@ public class CharmsWindow extends StandOutWindow {
 
     @Override
     public void createAndAttachView(int id, final FrameLayout frame) {
+        MediaCharm.registerMediaReciever(this);
         ApplicationWrapper.charmsWindow = this;
 
         final LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -35,14 +36,11 @@ public class CharmsWindow extends StandOutWindow {
                 closeCharmsWindow();
             }
         });
-        Spinner addCharm = (Spinner) root.findViewById(R.id.window_open_spinner);
-        addCharm.setAdapter(new CharmSelectAdapter());
-//        root.findViewById(R.id.window_open_test).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                CharmHolder.addCharm(root, new MediaCharm(CharmsWindow.this, 0, 0), inflater, true);
-//            }
-//        });
+
+        Spinner spinner = (Spinner) root.findViewById(R.id.window_open_spinner);
+        CharmSelectAdapter adapter = new CharmSelectAdapter(root, spinner);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(adapter);
 
         CharmHolder.init(root, inflater);
         frame.addView(root);
