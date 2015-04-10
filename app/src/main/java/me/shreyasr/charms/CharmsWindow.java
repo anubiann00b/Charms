@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Spinner;
 
 import wei.mark.standout.StandOutWindow;
 import wei.mark.standout.constants.StandOutFlags;
@@ -34,12 +35,14 @@ public class CharmsWindow extends StandOutWindow {
                 closeCharmsWindow();
             }
         });
-        root.findViewById(R.id.window_open_test).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CharmHolder.addCharm(root, new MediaCharm(CharmsWindow.this, 0, 0), inflater, true);
-            }
-        });
+        Spinner addCharm = (Spinner) root.findViewById(R.id.window_open_spinner);
+        addCharm.setAdapter(new CharmSelectAdapter());
+//        root.findViewById(R.id.window_open_test).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                CharmHolder.addCharm(root, new MediaCharm(CharmsWindow.this, 0, 0), inflater, true);
+//            }
+//        });
 
         CharmHolder.init(root, inflater);
         frame.addView(root);

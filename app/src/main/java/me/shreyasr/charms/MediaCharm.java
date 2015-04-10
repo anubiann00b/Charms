@@ -19,8 +19,9 @@ import java.lang.reflect.Method;
 public class MediaCharm extends Charm {
 
     public MediaCharm(CharmsWindow window, int leftMargin, int topMargin) {
-        super(leftMargin, topMargin);
-        window.registerReceiver(musicReciever, intentFilter);
+        super("Media Charm", R.mipmap.ic_launcher, leftMargin, topMargin);
+        if (window != null)
+            window.registerReceiver(musicReciever, intentFilter);
     }
 
     @Override
@@ -95,6 +96,7 @@ public class MediaCharm extends Charm {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            // AudioManager.isMusicActive();
             Log.d("Received", intent.getAction());
             String action = intent.getAction();
             String cmd = intent.getStringExtra("command");

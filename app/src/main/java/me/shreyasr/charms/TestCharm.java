@@ -8,7 +8,7 @@ import android.widget.FrameLayout;
 public class TestCharm extends Charm {
 
     public TestCharm(int leftMargin, int topMargin) {
-        super(leftMargin, topMargin);
+        super("Test Charm", R.mipmap.ic_launcher, leftMargin, topMargin);
     }
 
     @Override

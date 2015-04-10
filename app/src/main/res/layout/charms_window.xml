@@ -18,9 +18,9 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
-        <Button
-            android:id="@+id/window_open_test"
-            android:layout_width="48dp"
+        <Spinner
+            android:id="@+id/window_open_spinner"
+            android:layout_width="match_parent"
             android:layout_height="48dp"
             android:gravity="end"
             android:text="Test" />
